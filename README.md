@@ -1,1 +1,1 @@
-# CS206
+# CS206 - Evolutionary Robotics
