@@ -9,18 +9,20 @@ from cmath import pi
 import random
 import math
 import constants as c
+import world
+import robot
 
 
 class SIMULATION:
     def __init__(self):
 
         self.physicsClient = p.connect(p.GUI)
-        p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
+        #p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setGravity(0,0,c.gravity)
 
-        self.world = WORLD()
-        self.robot = ROBOT()
+        self.robot = robot.ROBOT()
+        self.world = world.WORLD()
 
     def __del__(self):
         p.disconnect()
@@ -28,6 +30,7 @@ class SIMULATION:
     def Run(self):
         for x in range(c.program_run_time):
             p.stepSimulation()
-            self.robot.Sense(x)
-            self.robot.Act(x, self.robot)
             time.sleep(c.sleep_time)
+            self.robot.Sense(x)
+            self.robot.Think()
+            self.robot.Act()
