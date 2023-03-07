@@ -11,6 +11,7 @@ import math
 import constants as c
 import world
 import robot
+import time as t
 
 
 class SIMULATION:
@@ -24,13 +25,15 @@ class SIMULATION:
         self.robot = robot.ROBOT()
         self.world = world.WORLD()
 
-    def __del__(self):
-        p.disconnect()
 
     def Run(self):
-        for x in range(c.program_run_time):
+        for x in range(c.SIMULATION_STEPS):
             p.stepSimulation()
-            time.sleep(c.sleep_time)
-            self.robot.Sense(x)
-            self.robot.Think()
-            self.robot.Act()
+            ROBOT.Sense(self.robot)
+            ROBOT.Think(self.robot)
+            ROBOT.Act(self.robot)
+            
+            t.sleep(c.sleep_time)
+
+    def __del__():
+        p.disconnect()
